@@ -1,36 +1,66 @@
 # Native Image Studio
 
-Natywna aplikacja macOS (Swift 6, SwiftUI) do lokalnego generowania i edycji obrazów na Apple Silicon.
-Działa offline: bez Pythona, ComfyUI i lokalnego serwera. Inferencja przez MLX (FLUX.2 Klein) i Core ML (SDXL).
+A native macOS app (Swift 6, SwiftUI) for local image generation and editing on Apple Silicon.
+Works fully offline: no Python, no ComfyUI, no local server. Inference runs on MLX (FLUX.2 Klein) and Core ML (SDXL).
 
-## Wymagania
-- macOS 15+ na Apple Silicon (docelowo M4 Pro, 24 GB)
-- Xcode 26.2 (Swift 6.2) + komponent Metal Toolchain: `xcodebuild -downloadComponent MetalToolchain`
+## Features
 
-## Budowanie i testy
+- Text-to-image and image editing with FLUX.2 Klein (MLX) and SDXL (Core ML)
+- Live preview while generating (predicted image x̂₀ at every step — approximate or decoded by the VAE)
+- Gallery with folders (subdirectories on disk), moving selected images, deleting from the preview
+- Models tab: download and select image models
+- Prompt assistant: a local LLM that writes prompts in the format of the selected image model
+- Job queue with per-stage timings logged to the unified log
+
+## Requirements
+
+- macOS 15+ on Apple Silicon (target machine: M4 Pro, 24 GB)
+- Xcode 26.2 (Swift 6.2) + the Metal Toolchain component: `xcodebuild -downloadComponent MetalToolchain`
+
+## Build and test
+
 ```sh
-swift build                    # kompilacja (Swift 6, strict concurrency)
-swift test --skip EngineIntegrationTests   # testy jednostkowe (bez GPU)
-scripts/build-cli.sh           # nis-poc (xcodebuild — kompiluje shadery Metal dla MLX)
-scripts/integration-tests.sh   # EngineIntegrationTests z realną inferencją (wymaga wag)
-scripts/build-app.sh           # .build/NativeImageStudio.app
+swift build                                # compile (Swift 6, strict concurrency)
+swift test --skip EngineIntegrationTests   # unit tests (no GPU)
+scripts/build-cli.sh                       # nis-poc CLI (xcodebuild — compiles the Metal shaders for MLX)
+scripts/integration-tests.sh               # EngineIntegrationTests with real inference (requires weights)
+scripts/build-app.sh                       # .build/NativeImageStudio.app
 ```
-Samotest UI (scenariusz end-to-end + zrzuty okna): `NIS_SELFCHECK_DIR=/tmp/nis NIS_SELFCHECK_INPUTS=a.png:b.png .build/NativeImageStudio.app/Contents/MacOS/NativeImageStudio`
-Czasy etapów zadań (kolejka, zwalnianie, ładowanie, pierwszy krok): `log show --last 10m --predicate 'subsystem == "NativeImageStudio"' --style compact`.
-`swift build` nie kompiluje shaderów Metal, więc wszystko, co uruchamia MLX, budujemy przez `xcodebuild`
-(patrz `docs/DECISIONS.md`, D-003).
 
-## Modele
-`nis-poc download` pobiera FLUX.2 Klein 4B (transformer bf16 kwantyzowany w locie do int4, VAE, enkoder Qwen3-4B 4-bit)
-do `~/Library/Application Support/NativeImageStudio/MLXModels` (nie do `~/Library/Caches`, które bywa czyszczone). Z-Image: `scripts/download-zimage.sh` lub przycisk Pobierz w zakładce Modele. Wagi nie są commitowane.
+UI self-check (end-to-end scenario + window screenshots):
 
-## Asystent promptów
-Qwen3-8B Abliterated v2 (MLX, 4,1 GB) pisze prompty w formacie wybranego modelu obrazów. Pobieranie: zakładka Modele
-albo `nis-poc prompt-download`; test z linii poleceń: `nis-poc prompt --model <id> --prompt "pomysł na scenę"`.
+```sh
+NIS_SELFCHECK_DIR=/tmp/nis NIS_SELFCHECK_INPUTS=a.png:b.png .build/NativeImageStudio.app/Contents/MacOS/NativeImageStudio
+```
 
-## Dokumentacja
-- `docs/PLAN.md` — plan i architektura
-- `docs/DECISIONS.md` — decyzje (wybór bibliotek, vendoring, toolchain)
-- `docs/PROGRESS.md` — raporty etapów, wyniki testów i pomiary
-- `docs/bench/*.jsonl` — surowe pomiary
-- `docs/manifests/` — przykładowe manifesty modeli (np. Klein 9B, niezweryfikowany)
+Job stage timings (queue, unload, load, first step):
+
+```sh
+log show --last 10m --predicate 'subsystem == "NativeImageStudio"' --style compact
+```
+
+`swift build` does not compile Metal shaders, so everything that runs MLX is built with `xcodebuild`
+(see `docs/DECISIONS.md`, D-003).
+
+## Models
+
+`nis-poc download` fetches FLUX.2 Klein 4B (bf16 transformer quantized to int4 on the fly, VAE, Qwen3-4B 4-bit text encoder)
+into `~/Library/Application Support/NativeImageStudio/MLXModels` (not `~/Library/Caches`, which may be purged).
+Z-Image: `scripts/download-zimage.sh` or the Download button in the Models tab. Weights are not committed.
+
+## Prompt assistant
+
+Qwen3-8B Abliterated v2 (MLX, 4.1 GB) writes prompts in the format of the selected image model. Download it from the Models tab
+or with `nis-poc prompt-download`; try it from the command line: `nis-poc prompt --model <id> --prompt "scene idea"`.
+
+## Documentation (in Polish)
+
+- `docs/PLAN.md` — plan and architecture
+- `docs/DECISIONS.md` — decisions (library choice, vendoring, toolchain)
+- `docs/PROGRESS.md` — milestone reports, test results and measurements
+- `docs/bench/*.jsonl` — raw measurements
+- `docs/manifests/` — sample model manifests (e.g. Klein 9B, unverified)
+
+## License
+
+Code: MIT — see [LICENSE](LICENSE). Model weights are not included and are subject to their own licenses.
