@@ -1,0 +1,43 @@
+{
+  "id": "zimage-turbo",
+  "name": "Z-Image Turbo (Tongyi)",
+  "architecture": "zimage",
+  "backend": "mlx",
+  "quantization": "int4",
+  "capabilities": [
+    "textToImage",
+    "imageToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    768,
+    1024
+  ],
+  "defaultSteps": 8,
+  "defaultGuidance": 0.0,
+  "minimumMemoryGB": 24,
+  "license": "Apache-2.0 (Tongyi-MAI/Z-Image-Turbo; plik z Comfy-Org/Z-Image-Turbo); port Swift: MIT",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Model destylowany (Turbo): ~8 kroków, guidance 0 — bez CFG, więc bez negatywnego promptu.",
+    "Tylko tekst→obraz i transformacja (img2img); brak edycji z referencjami i inpaintingu.",
+    "Mała zmienność między seedami (cecha Z-Image Turbo).",
+    "Zmierzone (M4 Pro 24 GB, 1024², 8 kroków): ~77–84 s, ~9,5 s/krok, szczyt MLX 19,4 GB z enkoderem 8-bit (22,5 GB z bf16). Na Macach z 16 GB nie zmieści się w 1024²."
+  ],
+  "supportsLoRA": false,
+  "supportsNegativePrompt": false,
+  "backendOptions": {
+    "baseSnapshot": "base",
+    "baseRepo": "Tongyi-MAI/Z-Image-Turbo",
+    "transformerFile": "zimage-turbo/z_image_turbo_bf16.safetensors",
+    "transformerURL": "https://huggingface.co/Comfy-Org/Z-Image-Turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors",
+    "transformerBits": "4",
+    "textEncoderBits": "8"
+  },
+  "memory": {
+    "residentGB": 8.2,
+    "activationGBPerMegapixel": 10.8,
+    "perReferenceImageGB": 0.0
+  }
+}

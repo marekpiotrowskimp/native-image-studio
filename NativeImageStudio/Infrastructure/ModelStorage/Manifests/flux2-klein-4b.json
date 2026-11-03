@@ -1,0 +1,44 @@
+{
+  "id": "flux2-klein-4b",
+  "name": "FLUX.2 Klein 4B",
+  "architecture": "flux2",
+  "backend": "mlx",
+  "quantization": "int4",
+  "capabilities": [
+    "textToImage",
+    "imageToImage",
+    "referenceEdit",
+    "inpainting"
+  ],
+  "maxReferenceImages": 4,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    512,
+    768,
+    1024
+  ],
+  "defaultSteps": 4,
+  "defaultGuidance": 1.0,
+  "minimumMemoryGB": 16,
+  "license": "Apache-2.0 (black-forest-labs/FLUX.2-klein-4B); text encoder Qwen3-4B Apache-2.0",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Model destylowany: 4 kroki, guidance 1.0; negatywny prompt nieobsługiwany.",
+    "Edycja to warunkowanie obrazami referencyjnymi (tokeny referencji w uwadze transformera), nie klasyczne img2img; tryb transformacji dokłada init latents + strength.",
+    "Przy 4 krokach strength działa skokowo: tylko wartości ≤ 0.75 pomijają krok.",
+    "Czas kroku rośnie z liczbą referencji (1024², M4 Pro): ~7–8.5 s bez referencji, ~19 s (1), ~30 s (2), ~46 s (3), ~69 s (4)."
+  ],
+  "supportsLoRA": true,
+  "supportsNegativePrompt": false,
+  "backendOptions": {
+    "flux2Model": "klein-4b",
+    "transformerQuantization": "int4",
+    "textEncoderQuantization": "4bit",
+    "vaeVariant": "standard"
+  },
+  "memory": {
+    "residentGB": 4.8,
+    "activationGBPerMegapixel": 9.6,
+    "perReferenceImageGB": 0.02
+  }
+}

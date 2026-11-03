@@ -1,0 +1,42 @@
+{
+  "id": "realvisxl-v5-lightning-coreml",
+  "name": "RealVisXL V5.0 Lightning (Core ML)",
+  "architecture": "sdxl",
+  "backend": "coreml",
+  "quantization": "unet-6bit-palettized",
+  "capabilities": [
+    "textToImage",
+    "imageToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    1024
+  ],
+  "defaultSteps": 6,
+  "defaultGuidance": 2.0,
+  "minimumMemoryGB": 8,
+  "license": "CreativeML Open RAIL++-M (SG161222/RealVisXL_V5.0_Lightning); konwersja Core ML: LocalMuseAI",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Stała rozdzielczość 1024×1024 (UNet skompilowany dla latentu 128×128).",
+    "Autor zaleca sampler DPM++ SDE Karras; pipeline Apple ma DPM-Solver++ (2M) z odstępami Karras — wyniki mogą odbiegać od referencyjnych.",
+    "Brak ControlNet dla SDXL w tym pipeline; brak edycji z wieloma referencjami.",
+    "Seed 32-bitowy (pipeline Core ML).",
+    "Profil pamięci zmierzony jako footprint procesu przy cpuAndNeuralEngine: 0,35 GB po załadowaniu, szczyt 4,72 GB przy 1024² (cpuAndGPU: szczyt 11,7 GB).",
+    "Img2img z 6 krokami i odstępami Karras działa skokowo: siła ≤ 0,75 prawie nie zmienia obrazu, 0,9 tworzy niemal nowy obraz."
+  ],
+  "supportsLoRA": false,
+  "supportsNegativePrompt": true,
+  "backendOptions": {
+    "hfRepo": "LocalMuseAI/coreml-realvisxl-v5-lightning-6bit-v2",
+    "computeUnits": "cpuAndNeuralEngine",
+    "scheduler": "dpmpp",
+    "timestepSpacing": "karras"
+  },
+  "memory": {
+    "residentGB": 0.4,
+    "activationGBPerMegapixel": 4.3,
+    "perReferenceImageGB": 0.0
+  }
+}

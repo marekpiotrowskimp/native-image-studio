@@ -1,0 +1,40 @@
+{
+  "id": "cyberrealistic-xl-v10-coreml",
+  "name": "CyberRealistic XL v10 (Core ML)",
+  "architecture": "sdxl",
+  "backend": "coreml",
+  "quantization": "unet-6bit-palettized",
+  "capabilities": [
+    "textToImage",
+    "imageToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    1024
+  ],
+  "defaultSteps": 30,
+  "defaultGuidance": 7.5,
+  "minimumMemoryGB": 8,
+  "license": "CreativeML Open RAIL-M (cyberdelia/CyberRealisticXL Play V10.0); konwersja Core ML: LocalMuseAI",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Stała rozdzielczość 1024×1024.",
+    "Zalecenia z karty konwersji: 25–40 kroków (domyślnie 30), DPM-Solver++ Karras, CFG 7.5.",
+    "Pochodzenie udokumentowane (PROVENANCE.json: rewizja źródła i SHA-256 checkpointu).",
+    "Zmierzone (M4 Pro, ANE): 1024², 30 kroków ~56 s (1,82 s/krok), szczyt procesu 4,8 GB; pierwsze ładowanie 129 s (kompilacja ANE)."
+  ],
+  "supportsLoRA": false,
+  "supportsNegativePrompt": true,
+  "backendOptions": {
+    "hfRepo": "LocalMuseAI/coreml-cyberrealistic-xl-v10-6bit",
+    "computeUnits": "cpuAndNeuralEngine",
+    "scheduler": "dpmpp",
+    "timestepSpacing": "karras"
+  },
+  "memory": {
+    "residentGB": 0.4,
+    "activationGBPerMegapixel": 4.2,
+    "perReferenceImageGB": 0.0
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "pony-diffusion-v6-xl-coreml",
+  "name": "Pony Diffusion V6 XL (Core ML)",
+  "architecture": "sdxl",
+  "backend": "coreml",
+  "quantization": "unet-8bit-palettized",
+  "capabilities": [
+    "textToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    1024
+  ],
+  "defaultSteps": 25,
+  "defaultGuidance": 7,
+  "minimumMemoryGB": 8,
+  "license": "CreativeML Open RAIL-M (wg kart HF AstraliteHeart/pony-diffusion-v6 i konwersji); konwersja Core ML: Gatchamn",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Stała rozdzielczość 1024×1024; tylko tekst→obraz (konwersja nie zawiera enkodera VAE).",
+    "Model postaci (anime / cartoon / furry), nie fotorealistyczny.",
+    "Wymaga tagów jakości na początku promptu: „score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up”, potem tag source_* (source_anime, source_cartoon, source_furry, source_pony). Bez nich jakość wyraźnie spada.",
+    "Karta zaleca CLIP skip 2 — w skompilowanej konwersji nie da się tego zmienić.",
+    "Ustawienia z karty konwersji: 25 kroków, CFG 7.",
+    "Działa na GPU: z jednostkami ANE Core ML wykonywał UNet na CPU (po 20 min pierwszy obraz nadal niegotowy).",
+    "Zmierzone (M4 Pro, GPU): 1024², 25 kroków 66,2–66,8 s (2,5–2,6 s/krok), szczyt procesu 8,8 GB; ładowanie 26–27 s (kompilacja GPU przy każdym ładowaniu).",
+    "Konwersja społecznościowa bez historii pobrań; zweryfikowana generowaniem w testach."
+  ],
+  "promptStyle": "ponyTags",
+  "supportsLoRA": false,
+  "supportsNegativePrompt": true,
+  "backendOptions": {
+    "hfRepo": "Gatchamn/coreml-pony-diffusion-v6-xl-8bit",
+    "computeUnits": "cpuAndGPU",
+    "scheduler": "dpmpp",
+    "timestepSpacing": "karras"
+  },
+  "memory": {
+    "residentGB": 3.6,
+    "activationGBPerMegapixel": 5.0,
+    "perReferenceImageGB": 0.0
+  }
+}

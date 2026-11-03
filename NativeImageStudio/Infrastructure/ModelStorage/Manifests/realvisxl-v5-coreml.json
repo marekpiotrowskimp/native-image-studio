@@ -1,0 +1,40 @@
+{
+  "id": "realvisxl-v5-coreml",
+  "name": "RealVisXL V5.0 (Core ML, 768)",
+  "architecture": "sdxl",
+  "backend": "coreml",
+  "quantization": "unet-6bit-palettized",
+  "capabilities": [
+    "textToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 768,
+  "supportedResolutions": [
+    768
+  ],
+  "defaultSteps": 50,
+  "defaultGuidance": 5.0,
+  "minimumMemoryGB": 8,
+  "license": "CreativeML Open RAIL++-M (SG161222/RealVisXL_V5.0); konwersja Core ML: BulentOngun",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Konwersja skompilowana dla 768×768 (SPLIT_EINSUM pod ANE).",
+    "Bez VAEEncoder w paczce — tylko tekst→obraz.",
+    "Autor zaleca DPM++ 2M Karras i 50+ kroków (lub DPM++ SDE Karras 30+). CFG nie podano — 5.0 to wartość wyjściowa do strojenia.",
+    "Konwersja społecznościowa bez historii pobrań; pochodzenie: README repozytorium.",
+    "Zmierzone (M4 Pro, ANE): 768², 50 kroków ~40 s (0,78 s/krok), szczyt procesu 1,6 GB; pierwsze ładowanie 124 s (kompilacja ANE)."
+  ],
+  "supportsLoRA": false,
+  "supportsNegativePrompt": true,
+  "backendOptions": {
+    "hfRepo": "BulentOngun/coreml-realvisxl-v5",
+    "computeUnits": "cpuAndNeuralEngine",
+    "scheduler": "dpmpp",
+    "timestepSpacing": "karras"
+  },
+  "memory": {
+    "residentGB": 0.2,
+    "activationGBPerMegapixel": 2.4,
+    "perReferenceImageGB": 0.0
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "juggernaut-xl-v9-coreml",
+  "name": "Juggernaut XL v9 (Core ML)",
+  "architecture": "sdxl",
+  "backend": "coreml",
+  "quantization": "unet-8bit-palettized",
+  "capabilities": [
+    "textToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    1024
+  ],
+  "defaultSteps": 35,
+  "defaultGuidance": 5.0,
+  "minimumMemoryGB": 8,
+  "license": "CreativeML Open RAIL-M (RunDiffusion/Juggernaut-XL-v9); konwersja Core ML: Gatchamn",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Stała rozdzielczość 1024×1024 (UNet skompilowany dla latentu 128×128).",
+    "Bez VAEEncoder w paczce — tylko tekst→obraz.",
+    "Zalecenia z karty konwersji: 30–40 kroków, CFG 3–7, start bez negatywnego promptu.",
+    "Konwersja społecznościowa; pochodzenie: README repozytorium.",
+    "Zmierzone (M4 Pro): GPU 35 kroków 96 s (2,53 s/krok, szczyt 8,7 GB) vs ANE 197 s (5,56 s/krok, 4,2 GB) — konwersja nie jest optymalna pod ANE, domyślnie GPU."
+  ],
+  "supportsLoRA": false,
+  "supportsNegativePrompt": true,
+  "backendOptions": {
+    "hfRepo": "Gatchamn/coreml-juggernaut-xl-v9-8bit",
+    "computeUnits": "cpuAndGPU",
+    "scheduler": "dpmpp",
+    "timestepSpacing": "karras"
+  },
+  "memory": {
+    "residentGB": 3.4,
+    "activationGBPerMegapixel": 5.1,
+    "perReferenceImageGB": 0.0
+  }
+}

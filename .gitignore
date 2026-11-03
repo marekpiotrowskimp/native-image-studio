@@ -1,0 +1,27 @@
+# Build
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# Generated images, model weights, large binaries — never commit
+out/
+*.safetensors
+*.mlmodelc/
+*.mlpackage/
+*.gguf
+*.bin
+*.ckpt
+Models/
+models/
+
+# Private test photos
+NativeImageStudio/Tests/TestSupport/Fixtures/private/
+
+.DS_Store
+
+# sekrety / system
+.env
+secrets.h
+secrets.py

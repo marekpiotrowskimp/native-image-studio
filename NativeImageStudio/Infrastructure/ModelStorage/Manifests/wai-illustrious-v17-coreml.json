@@ -1,0 +1,43 @@
+{
+  "id": "wai-illustrious-v17-coreml",
+  "name": "WAI-NSFW Illustrious SDXL V17 (Core ML)",
+  "architecture": "sdxl",
+  "backend": "coreml",
+  "quantization": "unet-6bit-palettized",
+  "capabilities": [
+    "textToImage",
+    "imageToImage"
+  ],
+  "maxReferenceImages": 0,
+  "preferredResolution": 1024,
+  "supportedResolutions": [
+    1024
+  ],
+  "defaultSteps": 25,
+  "defaultGuidance": 6,
+  "minimumMemoryGB": 8,
+  "license": "Fair AI Public License 1.0-SD (WAI0731, Civitai 827184 v2883731) — z listą zakazanych zastosowań; konwersja Core ML: LocalMuseAI",
+  "commercialUse": true,
+  "knownLimitations": [
+    "Stała rozdzielczość 1024×1024.",
+    "Model anime (baza Illustrious XL); zalecane tagi jakości: „masterpiece, best quality, amazing quality”.",
+    "Karta konwersji: 15–30 kroków (domyślnie 25), DPM-Solver++ Karras, CFG 5–7 (6 to środek zakresu).",
+    "Model dostrojony do NSFW: nawet neutralny prompt potrafi dać seksualizowany obraz; do treści SFW dodaj „nsfw” do negatywnego promptu.",
+    "Zmierzone (M4 Pro, ANE): 1024², 25 kroków 47,2–47,5 s (1,82 s/krok), szczyt procesu 4,8 GB; img2img 0,6: 30 s; pierwsze ładowanie 128–135 s (kompilacja ANE).",
+    "Pochodzenie udokumentowane (PROVENANCE.json: rewizja źródła i SHA-256 checkpointu; nieużywana ostatnia warstwa CLIP-L z wartościami nieskończonymi zastąpiona warstwą bazy Illustrious)."
+  ],
+  "promptStyle": "booruTags",
+  "supportsLoRA": false,
+  "supportsNegativePrompt": true,
+  "backendOptions": {
+    "hfRepo": "LocalMuseAI/coreml-wai-illustrious-sdxl-v17-6bit",
+    "computeUnits": "cpuAndNeuralEngine",
+    "scheduler": "dpmpp",
+    "timestepSpacing": "karras"
+  },
+  "memory": {
+    "residentGB": 0.4,
+    "activationGBPerMegapixel": 4.2,
+    "perReferenceImageGB": 0.0
+  }
+}
